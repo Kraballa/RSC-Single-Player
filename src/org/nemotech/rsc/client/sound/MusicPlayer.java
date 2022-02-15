@@ -89,7 +89,9 @@ public class MusicPlayer {
             } catch(IOException | InvalidMidiDataException e) {
                 e.printStackTrace();
             }
-            sequencer.start();
+            if(sequencer != null || !sequencer.isOpen()){
+                sequencer.start();
+            }
         }).start();
     }
 
