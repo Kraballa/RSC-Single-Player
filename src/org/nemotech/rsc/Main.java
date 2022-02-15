@@ -26,8 +26,8 @@ public final class Main {
     
     public static void main(String[] args) {
         System.out.println("Welcome to RSC Single Player v" + Constants.VERSION + "\n");
-        System.out.println("To report any bugs, exploits, missing or incorrect content, etc. you can contact");
-        System.out.println("the developer at sean@nemotech.org [Sean Niemann / Zoso]\n");
+        System.out.println("Please report any bugs on the projects github issue tracker.");
+        System.out.println("This version is a fork and not maintained by the original developers.");
         // initialize gson
         EntityManager.init();
         // start client

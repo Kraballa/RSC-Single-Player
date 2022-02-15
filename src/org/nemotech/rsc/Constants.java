@@ -20,7 +20,7 @@ public class Constants {
     
     public static final String APPLICATION_TITLE = "RSC Single Player " + VERSION;
 
-    public static final int APPLICATION_WIDTH = 950, APPLICATION_HEIGHT = 500;
+    public static final int APPLICATION_WIDTH = 1280, APPLICATION_HEIGHT = 920;
     
     public static final boolean APPLICATION_RESIZABLE = true;
     
