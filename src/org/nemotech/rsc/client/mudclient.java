@@ -1,25 +1,21 @@
 package org.nemotech.rsc.client;
 
+import org.nemotech.rsc.Constants;
+import org.nemotech.rsc.client.action.ActionManager;
 import org.nemotech.rsc.client.action.impl.*;
-import org.nemotech.rsc.client.action.*;
+import org.nemotech.rsc.client.sound.MusicPlayer;
+import org.nemotech.rsc.client.sound.SoundEffect;
 import org.nemotech.rsc.core.ClientUpdater;
 import org.nemotech.rsc.external.EntityManager;
-import org.nemotech.rsc.util.Colors;
-import org.nemotech.rsc.Constants;
-import org.nemotech.rsc.util.Util;
-import org.nemotech.rsc.client.sound.SoundEffect;
-import org.nemotech.rsc.client.sound.MusicPlayer;
+import org.nemotech.rsc.model.Point3D;
 import org.nemotech.rsc.model.player.Player;
+import org.nemotech.rsc.util.Colors;
+import org.nemotech.rsc.util.Util;
 
 import java.awt.*;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import org.nemotech.rsc.model.Point3D;
+import java.util.*;
 
 public class mudclient extends Shell {
     
@@ -63,7 +59,7 @@ public class mudclient extends Shell {
     
     public void resizeGame(int width, int height) {
         gameWidth = width;
-        gameHeight = height - 12;
+        gameHeight = height;
 
         // set raster
         surface.imagePixelArray = new int[width * height];
@@ -81,13 +77,12 @@ public class mudclient extends Shell {
         createAppearancePanel();
         
         panelMagic = new Menu(surface, 5);
-        int x = surface.width2 - 199;
-        byte y = 36;
-        controlListMagic = panelMagic.addTextListInteractive(x, y + 24, 196, 90, 1, 500, true);
+        int x = surface.width2;
+        controlListMagic = panelMagic.addTextListInteractive(x, 0, 196, 90, 1, 500, true);
         panelMusic = new Menu(surface, 5);
-        controlListMusic = panelMusic.addTextListInteractive(x, y + 24, 196, 166 - 24, 1, 2000, true);
+        controlListMusic = panelMusic.addTextListInteractive(x, 0, 196, 166, 1, 2000, true);
         panelQuestList = new Menu(surface, 5);
-        controlListQuest = panelQuestList.addTextListInteractive(x, y + 24, 196, 251, 1, 500, true);
+        controlListQuest = panelQuestList.addTextListInteractive(x, 0, 196, 251, 1, 500, true);
 
         graphics = getGraphics();
         //repaint();
@@ -3073,7 +3068,7 @@ OUTER:		for (int animationIndex = 0; animationIndex < EntityManager.getAnimation
 
     private void drawChatMessageTabs() {
         /* bottom blue bar */
-        int OFFSET = 20;
+        int OFFSET = getApplication().getInsets().bottom;
         surface.drawSprite(0, gameHeight-OFFSET, spriteMedia + 22);
         /* extended bottom blue bar */
         surface.drawSprite(gameWidth - 512, gameHeight-OFFSET, spriteMedia + 22);

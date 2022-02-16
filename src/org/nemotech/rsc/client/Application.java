@@ -42,8 +42,8 @@ public class Application extends Frame {
             addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentResized(ComponentEvent e) {
-                    int width = getWidth();
-                    int height = getHeight();
+                    int width = getInnerWidth();
+                    int height = getInnerHeight();
                     shell.doResize(width, height);
                 }
             });
@@ -53,13 +53,15 @@ public class Application extends Frame {
     @Override
     public Graphics getGraphics() {
         Graphics graphics = super.getGraphics();
-        graphics.translate(0, 22);
+        Insets insets = getInsets();
+        graphics.translate(insets.left, insets.top);
         return graphics;
     }
 
     @Override
     public void setSize(int x, int y) {
-        super.setSize(x, y + 32);
+        Insets insets = getInsets();
+        super.setSize(x - insets.left - insets.right, y - insets.top - insets.bottom);
     }
 
     @Override
@@ -67,10 +69,14 @@ public class Application extends Frame {
         if (e instanceof MouseEvent) {
             if(e instanceof MouseWheelEvent) {
                 MouseWheelEvent evt = (MouseWheelEvent) e;
-                e = new MouseWheelEvent(evt.getComponent(), evt.getID(), evt.getWhen(), evt.getModifiers(), evt.getX(), evt.getY() - 24, evt.getClickCount(), evt.isPopupTrigger(), evt.getScrollType(), evt.getScrollAmount(), evt.getWheelRotation());
+                int evtX = evt.getX() - getInsets().left;
+                int evtY = evt.getY() - getInsets().top;
+                e = new MouseWheelEvent(evt.getComponent(), evt.getID(), evt.getWhen(), evt.getModifiers(), evtX, evtY, evt.getClickCount(), evt.isPopupTrigger(), evt.getScrollType(), evt.getScrollAmount(), evt.getWheelRotation());
             } else {
                 MouseEvent evt = (MouseEvent) e;
-                e = new MouseEvent(evt.getComponent(), evt.getID(), evt.getWhen(), evt.getModifiers(), evt.getX(), evt.getY() - 24, evt.getClickCount(), evt.isPopupTrigger());
+                int evtX = evt.getX() - getInsets().left;
+                int evtY = evt.getY() - getInsets().top;
+                e = new MouseEvent(evt.getComponent(), evt.getID(), evt.getWhen(), evt.getModifiers(),evtX, evtY, evt.getClickCount(), evt.isPopupTrigger());
             }
         }
         super.processEvent(e);
@@ -80,5 +86,18 @@ public class Application extends Frame {
     public void paint(Graphics g) {
         shell.paint(g);
     }
-    
+
+    public int getLeft(){
+        return getInsets().left;
+    }
+
+    public int getInnerWidth(){
+        Insets insets = getInsets();
+        return getWidth() - insets.left - insets.right;
+    }
+
+    public int getInnerHeight(){
+        Insets insets = getInsets();
+        return getHeight() - insets.top - insets.bottom;
+    }
 }
