@@ -5545,8 +5545,8 @@ OUTER:		for (int animationIndex = 0; animationIndex < EntityManager.getAnimation
             case 50:
                 resetGame();
                 application.setResizable(true);
-                // removed temp: application.setSize(tempDimension == null ? player.preferredDimension : tempDimension);
                 application.setLocationRelativeTo(null);
+                resizeGame(application.getInnerWidth(),application.getInnerHeight());
                 break;
             case 1:
                 showLoginScreenStatus("", "Account does not exist. To create an account, select 'new user'");
