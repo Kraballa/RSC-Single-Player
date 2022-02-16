@@ -2,51 +2,67 @@ package org.nemotech.rsc.client;
 
 public class Menu {
 
+    public static final int TEXT_CENTERED = 1;
+    public static final int BUTTON_BG = 2;
+    public static final int LINE_HORIZ = 3;
+    public static final int TEXT_LIST_SCROLL = 4;
+    public static final int TEXT_LIST_INPUT = 5;
+    public static final int TEXT_INPUT = 6;
+    public static final int OPTION_LIST_HORIZ = 7;
+    public static final int OPTION_LIST_VERT = 8;
+    public static final int TEXT_LIST_INTERACTIVE = 9;
+    public static final int BUTTON = 10;
+    public static final int BOX_ROUNDED = 11;
+    public static final int SPRITE = 12;
+    public static final int CHECKBOX = 14;
+    public static final int SPRITE_LIST = 15;
+    public static final int TEXT = 0;
+
     public static boolean drawBackgroundArrow = true;
     public static int baseSpriteStart;
     public static int redMod = 114;
     public static int greenMod = 114;
     public static int blueMod = 176;
     public static int textListEntryHeightMod;
-    public boolean controlShown[];
-    public boolean controlListScrollbarHandleDragged[];
-    public boolean controlMaskText[];
-    public boolean controlClicked[];
+    public boolean[] controlShown;
+    public boolean[] controlListScrollbarHandleDragged;
+    public boolean[] controlMaskText;
+    public boolean[] controlClicked;
     public int[] controlScrollAmount;
-    public int controlListEntryCount[];
-    public int controlListEntryMouseButtonDown[];
-    public int controlListEntryMouseOver[];
+    public int[] controlListEntryCount;
+    public int[] controlListEntryMouseButtonDown;
+    public int[] controlListEntryMouseOver;
     public boolean aBoolean219;
     protected Surface surface;
     private int controlCount;
-    private boolean controlUseAlternativeColour[];
-    private int controlX[];
-    private int controlY[];
-    private int controlType[];
-    private int controlWidth[];
-    private int controlHeight[];
-    private int controlInputMaxLen[];
-    private int controlTextSize[];
-    private String controlText[];
-    private String controlListEntries[][];
+    private final boolean[] controlUseAlternativeColour;
+    private final int[] controlX;
+    private final int[] controlY;
+    private final int[] controlType;
+    private final int[] controlWidth;
+    private final int[] controlHeight;
+    private final int[] controlInputMaxLen;
+    private final int[] controlTextSize;
+    private final String[] controlText;
+    private final String[][] controlListEntries;
     private int mouseX;
     private int mouseY;
     private int mouseLastButtonDown;
     private int mouseButtonDown;
     private int focusControlIndex;
     private int mouseMetaButtonHeld;
-    private int colourScrollbarTop;
-    private int colourScrollbarBottom;
-    private int colourScrollbarHandleLeft;
-    private int colourScrollbarHandleMid;
-    private int colourScrollbarHandleRight;
-    private int colourRoundedBoxOut;
-    private int colourRoundedBoxMid;
-    private int colourRoundedBoxIn;
-    private int colourBoxTopNBottom;
-    private int colourBoxTopNBottom2;
-    private int colourBoxLeftNRight2;
-    private int colourBoxLeftNRight;
+    private final int colourScrollbarTop;
+    private final int colourScrollbarBottom;
+    private final int colourScrollbarHandleLeft;
+    private final int colourScrollbarHandleMid;
+    private final int colourScrollbarHandleRight;
+    private final int colourRoundedBoxOut;
+    private final int colourRoundedBoxMid;
+    private final int colourRoundedBoxIn;
+    private final int colourBoxTopNBottom;
+    private final int colourBoxTopNBottom2;
+    private final int colourBoxLeftNRight2;
+    private final int colourBoxLeftNRight;
 
     public Menu(Surface surface, int max) {
         focusControlIndex = -1;
@@ -96,9 +112,9 @@ public class Menu {
             mouseLastButtonDown = lastmb;
         if (lastmb == 1) {
             for (int i1 = 0; i1 < controlCount; i1++) {
-                if (controlShown[i1] && controlType[i1] == 10 && mouseX >= controlX[i1] && mouseY >= controlY[i1] && mouseX <= controlX[i1] + controlWidth[i1] && mouseY <= controlY[i1] + controlHeight[i1])
+                if (controlShown[i1] && controlType[i1] == BUTTON && mouseX >= controlX[i1] && mouseY >= controlY[i1] && mouseX <= controlX[i1] + controlWidth[i1] && mouseY <= controlY[i1] + controlHeight[i1])
                     controlClicked[i1] = true;
-                if (controlShown[i1] && controlType[i1] == 14 && mouseX >= controlX[i1] && mouseY >= controlY[i1] && mouseX <= controlX[i1] + controlWidth[i1] && mouseY <= controlY[i1] + controlHeight[i1])
+                if (controlShown[i1] && controlType[i1] == CHECKBOX && mouseX >= controlX[i1] && mouseY >= controlY[i1] && mouseX <= controlX[i1] + controlWidth[i1] && mouseY <= controlY[i1] + controlHeight[i1])
                     controlListEntryMouseButtonDown[i1] = 1 - controlListEntryMouseButtonDown[i1];
             }
 
@@ -109,7 +125,7 @@ public class Menu {
             mouseMetaButtonHeld = 0;
         if (lastmb == 1 || mouseMetaButtonHeld > 20) {
             for (int j1 = 0; j1 < controlCount; j1++)
-                if (controlShown[j1] && controlType[j1] == 15 && mouseX >= controlX[j1] && mouseY >= controlY[j1] && mouseX <= controlX[j1] + controlWidth[j1] && mouseY <= controlY[j1] + controlHeight[j1])
+                if (controlShown[j1] && controlType[j1] == SPRITE_LIST && mouseX >= controlX[j1] && mouseY >= controlY[j1] && mouseX <= controlX[j1] + controlWidth[j1] && mouseY <= controlY[j1] + controlHeight[j1])
                     controlClicked[j1] = true;
 
             mouseMetaButtonHeld -= 5;
@@ -165,38 +181,38 @@ public class Menu {
             if (key == 9)
                 do
                     focusControlIndex = (focusControlIndex + 1) % controlCount;
-                while (controlType[focusControlIndex] != 5 && controlType[focusControlIndex] != 6);
+                while (controlType[focusControlIndex] != TEXT_LIST_INPUT && controlType[focusControlIndex] != TEXT_INPUT);
         }
     }
 
     public void drawPanel() {
         for (int i = 0; i < controlCount; i++) {
             if (controlShown[i]) {
-                if (controlType[i] == 0)// text
+                if (controlType[i] == TEXT)// text
                     drawText(i, controlX[i], controlY[i], controlText[i], controlTextSize[i]);
-                else if (controlType[i] == 1)// text (centered)
+                else if (controlType[i] == TEXT_CENTERED)// text (centered)
                     drawText(i, controlX[i] - surface.textWidth(controlText[i], controlTextSize[i]) / 2, controlY[i], controlText[i], controlTextSize[i]);
-                else if (controlType[i] == 2)// component gradient bg
+                else if (controlType[i] == BUTTON_BG)// component gradient bg
                     drawBox(controlX[i], controlY[i], controlWidth[i], controlHeight[i]);
-                else if (controlType[i] == 3)// horiz line
+                else if (controlType[i] == LINE_HORIZ)// horiz line
                     drawLineHoriz(controlX[i], controlY[i], controlWidth[i]);
-                else if (controlType[i] == 4)// text list (no interaction)
+                else if (controlType[i] == TEXT_LIST_SCROLL )// text list (no interaction)
                     drawTextList(i, controlX[i], controlY[i], controlWidth[i], controlHeight[i], controlTextSize[i], controlListEntries[i], controlListEntryCount[i], controlScrollAmount[i]);
-                else if (controlType[i] == 5 || controlType[i] == 6)// input text
+                else if (controlType[i] == TEXT_LIST_INPUT  || controlType[i] == TEXT_INPUT )// input text
                     drawTextInput(i, controlX[i], controlY[i], controlWidth[i], controlHeight[i], controlText[i], controlTextSize[i]);
-                else if (controlType[i] == 7)// option list horiz
+                else if (controlType[i] == OPTION_LIST_HORIZ )// option list horiz
                     drawOptionListHoriz(i, controlX[i], controlY[i], controlTextSize[i], controlListEntries[i]);
-                else if (controlType[i] == 8)// option list vert
+                else if (controlType[i] == OPTION_LIST_VERT )// option list vert
                     drawOptionListVert(i, controlX[i], controlY[i], controlTextSize[i], controlListEntries[i]);
-                else if (controlType[i] == 9)// text list (interaction)
+                else if (controlType[i] == TEXT_LIST_INTERACTIVE )// text list (interaction)
                     drawTextListInteractive(i, controlX[i], controlY[i], controlWidth[i], controlHeight[i], controlTextSize[i], controlListEntries[i], controlListEntryCount[i], controlScrollAmount[i]);
-                else if (controlType[i] == 11)// rounded box
+                else if (controlType[i] == BOX_ROUNDED )// rounded box
                     drawRoundedBox(controlX[i], controlY[i], controlWidth[i], controlHeight[i]);
-                else if (controlType[i] == 12)// image
+                else if (controlType[i] == SPRITE )// image
                     drawPicture(controlX[i], controlY[i], controlTextSize[i]);
-                else if (controlType[i] == 14)// checkbox
+                else if (controlType[i] == CHECKBOX )// checkbox
                     drawCheckbox(i, controlX[i], controlY[i], controlWidth[i], controlHeight[i]);
-                //else if (controlType[i] == 15) // sprite list
+                //else if (controlType[i] == SPRITE_LIST ) // sprite list
             }
         }
         mouseLastButtonDown = 0;
@@ -239,10 +255,10 @@ public class Menu {
                 text = text + "X";
 
         }
-        if (controlType[control] == 5) {// "list input"
+        if (controlType[control] == TEXT_LIST_INPUT ) {// "list input"
             if (mouseLastButtonDown == 1 && mouseX >= x && mouseY >= y - height / 2 && mouseX <= x + width && mouseY <= y + height / 2)
                 focusControlIndex = control;
-        } else if (controlType[control] == 6) {// "text input"
+        } else if (controlType[control] == TEXT_INPUT ) {// "text input"
             if (mouseLastButtonDown == 1 && mouseX >= x - width / 2 && mouseY >= y - height / 2 && mouseX <= x + width / 2 && mouseY <= y + height / 2)
                 focusControlIndex = control;
             x -= surface.textWidth(text, textSize) / 2;
@@ -299,7 +315,7 @@ public class Menu {
     }
 
     protected void drawTextList(int control, int x, int y, int width, int height, int textSize,
-            String listEntries[], int listEntryCount, int l1) {
+                                String[] listEntries, int listEntryCount, int l1) {
         int displayedEntryCount = height / surface.textHeight(textSize);
         if (l1 > listEntryCount - displayedEntryCount)
             l1 = listEntryCount - displayedEntryCount;
@@ -360,7 +376,7 @@ public class Menu {
         surface.drawLineVert(x2 + 2 + 8, corner1 + y + 14, corner2, colourScrollbarHandleRight);
     }
 
-    protected void drawOptionListHoriz(int control, int x, int y, int textSize, String listEntries[]) {
+    protected void drawOptionListHoriz(int control, int x, int y, int textSize, String[] listEntries) {
         int listTotalTextWidth = 0;
         int listEntryCount = listEntries.length;
         for (int idx = 0; idx < listEntryCount; idx++) {
@@ -398,7 +414,7 @@ public class Menu {
 
     }
 
-    protected void drawOptionListVert(int control, int x, int y, int textSize, String listEntries[]) {
+    protected void drawOptionListVert(int control, int x, int y, int textSize, String[] listEntries) {
         int listEntryCount = listEntries.length;
         int listTotalTextHeightMid = y - (surface.textHeight(textSize) * (listEntryCount - 1)) / 2;
         for (int idx = 0; idx < listEntryCount; idx++) {
@@ -430,7 +446,7 @@ public class Menu {
     }
 
     protected void drawTextListInteractive(int control, int x, int y, int width, int height, int textSize,
-                                           String listEntries[], int listEntryCount, int l1) {
+                                           String[] listEntries, int listEntryCount, int l1) {
         int displayedEntryCount = height / surface.textHeight(textSize);
         if (displayedEntryCount < listEntryCount) {
             int right = (x + width) - 12;
@@ -496,7 +512,7 @@ public class Menu {
     }
 
     public int addText(int x, int y, String text, int size, boolean flag) {
-        controlType[controlCount] = 1;
+        controlType[controlCount] = TEXT_CENTERED;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlTextSize[controlCount] = size;
@@ -508,7 +524,7 @@ public class Menu {
     }
 
     public int addButtonBackground(int x, int y, int width, int height) {
-        controlType[controlCount] = 2;
+        controlType[controlCount] = BUTTON_BG;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x - width / 2;
@@ -519,7 +535,7 @@ public class Menu {
     }
 
     public int addBoxRounded(int x, int y, int width, int height) {
-        controlType[controlCount] = 11;
+        controlType[controlCount] = BOX_ROUNDED;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x - width / 2;
@@ -532,7 +548,7 @@ public class Menu {
     public int addSprite(int x, int y, int spriteId) {
         int imgWidth = surface.sprites[spriteId].getAssumedWidth();
         int imgHeight = surface.sprites[spriteId].getAssumedHeight();
-        controlType[controlCount] = 12;
+        controlType[controlCount] = SPRITE;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x - imgWidth / 2;
@@ -544,7 +560,7 @@ public class Menu {
     }
 
     public int addTextListScrollable(int x, int y, int width, int height, int size, int maxLength, boolean flag) {
-        controlType[controlCount] = 4;
+        controlType[controlCount] = TEXT_LIST_SCROLL;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x;
@@ -562,7 +578,7 @@ public class Menu {
 
     public int addTextListInput(int x, int y, int width, int height, int size, int maxLength, boolean flag,
                                 boolean flag1) {
-        controlType[controlCount] = 5;
+        controlType[controlCount] = TEXT_LIST_INPUT;
         controlShown[controlCount] = true;
         controlMaskText[controlCount] = flag;
         controlClicked[controlCount] = false;
@@ -579,7 +595,7 @@ public class Menu {
 
     public int addTextInput(int x, int y, int width, int height, int size, int maxLength, boolean flag,
                             boolean flag1) {
-        controlType[controlCount] = 6;
+        controlType[controlCount] = TEXT_INPUT;
         controlShown[controlCount] = true;
         controlMaskText[controlCount] = flag;
         controlClicked[controlCount] = false;
@@ -595,7 +611,7 @@ public class Menu {
     }
 
     public int addTextListInteractive(int x, int y, int width, int height, int textSize, int maxLength, boolean flag) {
-        controlType[controlCount] = 9;
+        controlType[controlCount] = TEXT_LIST_INTERACTIVE;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlTextSize[controlCount] = textSize;
@@ -614,7 +630,7 @@ public class Menu {
     }
 
     public int addButton(int x, int y, int width, int height) {
-        controlType[controlCount] = 10;
+        controlType[controlCount] = BUTTON;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x - width / 2;
@@ -625,7 +641,7 @@ public class Menu {
     }
 
     public int addLineHoriz(int x, int y, int width) {
-        controlType[controlCount] = 3;
+        controlType[controlCount] = LINE_HORIZ;
         controlShown[controlCount] = true;
         controlX[controlCount] = x;
         controlY[controlCount] = y;
@@ -635,7 +651,7 @@ public class Menu {
 
     public int addOptionListHoriz(int x, int y, int textSize, int maxListCount,
                                   boolean useAltColour) {
-        controlType[controlCount] = 7;
+        controlType[controlCount] = OPTION_LIST_HORIZ;
         controlShown[controlCount] = true;
         controlX[controlCount] = x;
         controlY[controlCount] = y;
@@ -649,7 +665,7 @@ public class Menu {
 
     public int addOptionListVert(int x, int y, int textSize, int maxListCount,
                                  boolean useAltColour) {
-        controlType[controlCount] = 8;
+        controlType[controlCount] = OPTION_LIST_VERT;
         controlShown[controlCount] = true;
         controlX[controlCount] = x;
         controlY[controlCount] = y;
@@ -662,7 +678,7 @@ public class Menu {
     }
 
     public int addCheckbox(int x, int y, int width, int height) {
-        controlType[controlCount] = 14;
+        controlType[controlCount] = CHECKBOX;
         controlShown[controlCount] = true;
         controlX[controlCount] = x;
         controlY[controlCount] = y;
@@ -675,7 +691,7 @@ public class Menu {
     public int addSpriteList(int spriteId, int x, int y, int maxLength) {
         int imgWidth = surface.sprites[spriteId].getAssumedWidth();
         int imgHeight = surface.sprites[spriteId].getAssumedHeight();
-        controlType[controlCount] = 15;
+        controlType[controlCount] = SPRITE_LIST;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x - imgWidth / 2;
@@ -703,7 +719,7 @@ public class Menu {
     /*public int addSprite(int x, int y, int spriteId) {
         int imgWidth = surface.spriteWidth[spriteId];
         int imgHeight = surface.spriteHeight[spriteId];
-        controlType[controlCount] = 12;
+        controlType[controlCount] = SPRITE;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x - imgWidth / 2;
@@ -715,7 +731,7 @@ public class Menu {
     }
 
     public int addTextList(int x, int y, int width, int height, int size, int maxLength, boolean flag) {
-        controlType[controlCount] = 4;
+        controlType[controlCount] = TEXT_LIST_SCROLL;
         controlShown[controlCount] = true;
         controlClicked[controlCount] = false;
         controlX[controlCount] = x;
