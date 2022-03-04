@@ -4741,14 +4741,12 @@ OUTER:		for (int animationIndex = 0; animationIndex < EntityManager.getAnimation
         // TODO: passthrough to drop if shift is pressed
         if (mitemid == 650) {
             selectedItemInventoryIndex = midx;
-            showUiTab = 0;
             selectedItemName = EntityManager.getItem(inventoryItemId[selectedItemInventoryIndex]).getName();
         }
         // DROP INVENTORY ITEM
         if (mitemid == 660) {
             ActionManager.get(DropHandler.class).handleDrop(midx);
             selectedItemInventoryIndex = -1;
-            showUiTab = 0;
             showMessage("Dropping " + EntityManager.getItem(inventoryItemId[midx]).getName(), 4);
         }
         // EXAMINE INVENTORY ITEM
