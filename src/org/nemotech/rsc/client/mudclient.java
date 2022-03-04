@@ -1671,7 +1671,7 @@ public class mudclient extends Shell {
 
     public void createLoginPanels() {
         panelLoginWelcome = new Menu(surface, 50);
-        int y = 40;
+        int y = 320;
         int x = gameWidth / 2;
         panelLoginWelcome.addText(x, 200 + y, "Welcome to RuneScape Classic", 4, true);
         panelLoginWelcome.addButtonBackground(x - 100, 240 + y, 120, 35);
@@ -1681,7 +1681,7 @@ public class mudclient extends Shell {
         controlWelcomeNewUser = panelLoginWelcome.addButton(x - 100, 240 + y, 120, 35);
         controlWelcomeExistingUser = panelLoginWelcome.addButton(x + 100, 240 + y, 120, 35);
         panelRegisterUser = new Menu(surface, 50);
-        y = 10;
+        y = 290;
         controlRegisterStatus = panelRegisterUser.addText(x, y, "@yel@Fill out the details below to create an account", 4, true);
         controlRegisterTerms = panelRegisterUser.addTextListScrollable(gameWidth / 2 - (400 / 2), 20, 400, 190, 1, 1000, true);
         writeTerms(panelRegisterUser, controlRegisterTerms);
@@ -1700,7 +1700,7 @@ public class mudclient extends Shell {
         panelRegisterUser.setFocus(controlRegisterUser);
 
         panelLoginExistingUser = new Menu(surface, 50);
-        y = 230;
+        y = 490;
         controlLoginStatus1 = panelLoginExistingUser.addText(x, y - 30, "", 4, true);
         controlLoginStatus2 = panelLoginExistingUser.addText(x, y - 10, "Please enter your username", 4, true);
         y += 28;
@@ -4738,6 +4738,7 @@ OUTER:		for (int animationIndex = 0; animationIndex < EntityManager.getAnimation
             ActionManager.get(InventoryActionHandler.class).handleInventoryAction(midx);
         }
         // SELECT INVENTORY ITEM
+        // TODO: passthrough to drop if shift is pressed
         if (mitemid == 650) {
             selectedItemInventoryIndex = midx;
             showUiTab = 0;
