@@ -50,7 +50,7 @@ public abstract class Shell extends Panel implements Runnable, MouseListener, Mo
     private final String CHAR_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"\243$%^&*()-_=+[{]};:'@#~,<.>/?\\| ";
     
     public String logoHeaderText, inputTextCurrent, inputTextFinal, loadingProgessText;
-    public boolean keyLeft, keyRight, keyUp, keyDown, keySpace, interlace, closing;
+    public boolean keyLeft, keyRight, keyUp, keyDown, keySpace, keyShift, interlace, closing;
     public int threadSleep, mouseX, mouseY, mouseButtonDown, lastMouseButtonDown, stopTimeout, interlaceTimer,
         loadingProgressPercent, panelWidth, panelHeight, targetFps, maxDrawTime, loadingStep;
     private long[] timings;
@@ -138,6 +138,9 @@ public abstract class Shell extends Panel implements Runnable, MouseListener, Mo
             case KeyEvent.VK_F1:
                 interlace = !interlace;
                 break;
+            case KeyEvent.VK_SHIFT:
+                keyShift = true;
+                break;
             default:
                 break;
         }
@@ -181,6 +184,9 @@ public abstract class Shell extends Panel implements Runnable, MouseListener, Mo
                 break;
             case KeyEvent.VK_SPACE:
                 keySpace = false;
+                break;
+            case KeyEvent.VK_SHIFT:
+                keyShift = false;
                 break;
             default:
                 break;

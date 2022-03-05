@@ -2018,6 +2018,7 @@ public class mudclient extends Shell {
         }
     }
 
+    //TODO: fix this, it sucks
     private void setActiveUiTab() {
         if (showUiTab == 0 && super.mouseX >= surface.width2 - 35 && super.mouseY >= 3 && super.mouseX < surface.width2 - 3 && super.mouseY < 35) {
             showUiTab = 1;
@@ -4738,10 +4739,14 @@ OUTER:		for (int animationIndex = 0; animationIndex < EntityManager.getAnimation
             ActionManager.get(InventoryActionHandler.class).handleInventoryAction(midx);
         }
         // SELECT INVENTORY ITEM
-        // TODO: passthrough to drop if shift is pressed
         if (mitemid == 650) {
             selectedItemInventoryIndex = midx;
-            selectedItemName = EntityManager.getItem(inventoryItemId[selectedItemInventoryIndex]).getName();
+            if(keyShift){
+                mitemid = 660;
+            }
+            else{
+                selectedItemName = EntityManager.getItem(inventoryItemId[selectedItemInventoryIndex]).getName();
+            }
         }
         // DROP INVENTORY ITEM
         if (mitemid == 660) {
