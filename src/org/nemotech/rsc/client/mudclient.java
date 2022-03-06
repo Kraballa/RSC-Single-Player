@@ -400,7 +400,7 @@ public class mudclient extends Shell {
     public int inventoryItemStackCount[];
     public int inventoryEquipped[];
     public String skillNameShort[] = {
-        "Attack", "Defense", "Strength", "Hits", "Ranged", "Prayer", "Magic", "Cooking", "Woodcut", "Fletching",
+        "Attack", "Defense", "Strength", "Health", "Ranged", "Prayer", "Magic", "Cooking", "Woodcut", "Fletching",
         "Fishing", "Firemaking", "Crafting", "Smithing", "Mining", "Herblaw", "Agility", "Thieving"
     };
     public Mob knownPlayers[];
