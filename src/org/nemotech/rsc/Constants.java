@@ -95,8 +95,5 @@ public class Constants {
 
     // These NPCs are attackable, but do not run on low health such as guards etc.
     public static final int[] NPCS_THAT_DONT_RETREAT = { 65, 102, 100, 127, 258 };
-
-    // further game modifying constants
-    public static final float FATIGUE_MULT = 1f; //x% chance for fatigue to increment by 1.
-
+    
 }
